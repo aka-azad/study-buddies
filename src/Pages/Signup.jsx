@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import auth from "../firebase/firebase.config";
 import { AuthContext } from "../Context/AuthProvider";
+import axios from "axios";
 
 const Signup = () => {
   const { setLoading, signUpWithEmailPassword } = useContext(AuthContext);
@@ -42,18 +43,19 @@ const Signup = () => {
     signUpWithEmailPassword(email, password)
       .then(() => {
         updateProfile(auth.currentUser, { displayName: name, photoURL });
-        toast.success("Successfully registered!");
-        fetch("https://crowdcube-server-phi.vercel.app/users", {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify({ displayName: name, photoURL, email }),
-        }).catch((err) => {
-          toast.error(err.message);
-          console.log(err);
-        });
-        navigate("/");
+        axios
+          .post("http://localhost:5000/users", {
+            displayName: name,
+            photoURL,
+            email,
+          })
+          .then((res) => {
+            console.log(res.data);
+            if (res?.data?.insertedId) {
+              toast.success("Successfully registered!");
+              navigate("/");
+            }
+          });
       })
       .catch((err) => {
         setError(err.message);

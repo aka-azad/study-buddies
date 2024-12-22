@@ -1,12 +1,12 @@
 import { useContext, useState } from "react";
-import { AuthContext } from "../Context/AuthProvider";
 import { Link, Navigate } from "react-router";
 import { toast } from "react-toastify";
 import { FcGoogle } from "react-icons/fc";
-
+import axios from "axios";
+import { AuthContext } from "../Context/AuthProvider";
 
 const Signin = () => {
-  const { user, signinWithEmailPassword, signinWithGoogle, setLoading } =
+  const { user, signInWithEmailPassword, signInWithGoogle, setLoading } =
     useContext(AuthContext);
 
   const [email, setEmail] = useState("");
@@ -40,7 +40,7 @@ const Signin = () => {
     setLoading(true);
     e.preventDefault();
     setError("");
-    signinWithEmailPassword(email, password)
+    signInWithEmailPassword(email, password)
       .then(() => {
         setLoading(false);
       })
@@ -53,21 +53,17 @@ const Signin = () => {
   const handleGoogleLogin = () => {
     setLoading(true);
 
-    signinWithGoogle()
+    signInWithGoogle()
       .then((res) => {
+        const userInfo = {
+          displayName: res.user.displayName,
+          email: res.user.email,
+          photoURL: res.user.photoURL,
+        };
         setLoading(false);
-        fetch("https://crowdcube-server-phi.vercel.app/users", {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify({
-            displayName: res.user.displayName,
-            email: res.user.email,
-            photoURL: res.user.photoURL,
-          }),
-        })
-          .then((res) => res.json())
+        axios
+          .post("http://localhost:5000/users", userInfo)
+          .then((res) => res.data)
           .then((data) => {
             data.insertedId && toast.success("Account Registered Successfully");
           })
