@@ -1,4 +1,4 @@
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 import ThemeToggle from "./ThemeToggle";
 
 const Navbar = () => {
@@ -45,8 +45,10 @@ const Navbar = () => {
         <ul className="menu menu-horizontal px-1">{links}</ul>
       </div>
       <div className="navbar-end">
-        <ThemeToggle/>
-        <a className="btn ml-3">Button</a>
+        <ThemeToggle />
+        <Link to={"/signin"} className="btn ml-3">
+          Signin
+        </Link>
       </div>
     </div>
   );
