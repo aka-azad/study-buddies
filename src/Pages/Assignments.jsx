@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import axios from "axios";
 import { FaEdit, FaTrashAlt, FaEye } from "react-icons/fa";
 import Swal from "sweetalert2";
@@ -7,6 +7,7 @@ import { AuthContext } from "../Context/AuthProvider";
 
 const AssignmentsPage = () => {
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [assignments, setAssignments] = useState([]);
 
   useEffect(() => {
@@ -19,6 +20,18 @@ const AssignmentsPage = () => {
         console.error("Error fetching assignments:", error);
       });
   }, []);
+
+  const handleUpdate = (assignment) => {
+    console.log(assignment.placedBy, user?.email)
+    if (assignment.placedBy === user?.email) {
+      navigate(`/assignments/${assignment._id}/edit`);
+    } else
+      Swal.fire(
+        "Error!",
+        "You can only Edit assignments you created.",
+        "error"
+      );
+  };
 
   const handleDelete = (assignment) => {
     if (assignment?.placedBy === user.email) {
@@ -48,7 +61,6 @@ const AssignmentsPage = () => {
   };
 
   const confirmDelete = (assignment) => {
-    console.log(assignment);
 
     if (assignment?.placedBy === user.email) {
       Swal.fire({
@@ -97,12 +109,12 @@ const AssignmentsPage = () => {
                 >
                   <FaEye className="mr-1 text-xl" /> View
                 </Link>
-                <Link
-                  to={`/assignments/${assignment._id}/edit`}
+                <button
+                  onClick={() => handleUpdate(assignment)}
                   className="btn btn-secondary text-lg"
                 >
                   <FaEdit className="mr-1 text-xl" /> Update
-                </Link>
+                </button>
                 <button
                   onClick={() => confirmDelete(assignment)}
                   className="btn btn-error text-lg"
