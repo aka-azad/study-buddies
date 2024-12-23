@@ -7,6 +7,7 @@ import PrivateRoute from "./PrivateRoute";
 import CreateAssignment from "../Pages/CreateAssignment";
 import Assignments from "../Pages/Assignments";
 import UpdateAssignment from "../Pages/UpdateAssignment";
+import AssignmentDetails from "../Pages/AssignmentDetails";
 
 const router = createBrowserRouter([
   {
@@ -35,7 +36,7 @@ const router = createBrowserRouter([
       },
       {
         path: "assignments/:id",
-        element: <Assignments />,
+        element: <AssignmentDetails />,
       },
       {
         path: "assignments/:id/edit",
