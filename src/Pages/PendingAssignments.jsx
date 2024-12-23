@@ -44,15 +44,15 @@ const PendingAssignments = () => {
     const feedback = formData.get("feedback");
 
     const updatedAssignment = {
-      ...selectedAssignment,
       status: "completed",
       marks,
       feedback,
     };
 
+    console.log(selectedAssignment)
     axios
-      .put(
-        `http://localhost:5000/submissions/${selectedAssignment.id}`,
+      .patch(
+        `http://localhost:5000/submissions/${selectedAssignment._id}`,
         updatedAssignment
       )
       .then((res) => {
