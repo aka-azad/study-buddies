@@ -27,8 +27,6 @@ const Navbar = () => {
 
   return (
     <div className="navbar bg-base-100 bg-opacity-70 backdrop-blur-lg border-b-2 rounded-b-2xl mb-3 shadow-lg sticky top-0 z-50">
-      {" "}
-      {/* Added opacity and blur classes */}
       <div className="navbar-start">
         <div className="dropdown">
           <div

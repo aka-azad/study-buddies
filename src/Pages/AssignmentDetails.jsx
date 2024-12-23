@@ -4,6 +4,7 @@ import axios from "axios";
 import { FaArrowLeft } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { AuthContext } from "../Context/AuthProvider";
+import Swal from "sweetalert2";
 
 const AssignmentDetails = () => {
   const { id } = useParams();
@@ -25,14 +26,28 @@ const AssignmentDetails = () => {
       });
   }, [id]);
 
+  const handleTakeAssignment = () => {
+    if (user.email === assignment.placedBy) {
+      Swal.fire(
+        "Error!",
+        "You can not participate in assignments you created.",
+        "error"
+      );
+    } else {
+      document.getElementById("my_modal").showModal();
+    }
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
     const submissionData = {
+      title: assignment.title,
+      marks: assignment.marks,
       googleDocsLink,
       note,
       assignmentId: id,
       status: "pending",
-      submittedBy: user.email,
+      examinee_email: user.email,
+      examinee_name: user.displayName,
     };
 
     axios
@@ -80,7 +95,7 @@ const AssignmentDetails = () => {
           </p>
           <div className="w-fit mx-auto">
             <button
-              onClick={() => document.getElementById("my_modal").showModal()}
+              onClick={handleTakeAssignment}
               className="btn btn-wide btn-primary mt-4 "
             >
               Take Assignment
