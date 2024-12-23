@@ -31,7 +31,11 @@ const Navbar = () => {
       {/* Added opacity and blur classes */}
       <div className="navbar-start">
         <div className="dropdown">
-          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+          <div
+            tabIndex={0}
+            role="button"
+            className="btn btn-ghost px-0 pr-1 lg:hidden"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
@@ -96,14 +100,16 @@ const Navbar = () => {
                   </li>
 
                   <li>
-                    <a>Logout</a>
+                    <button onClick={signOutUser} className="sm:hidden block">
+                      Logout
+                    </button>
                   </li>
                 </ul>
               </div>
             </div>
             <button
               onClick={signOutUser}
-              className="btn ml-3 btn-outline btn-info"
+              className="btn ml-3 btn-outline btn-info hidden sm:block"
             >
               Log Out
             </button>
