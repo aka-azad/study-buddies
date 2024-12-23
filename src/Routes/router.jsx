@@ -5,6 +5,7 @@ import Signin from "../Pages/Signin";
 import Signup from "../Pages/Signup";
 import PrivateRoute from "./PrivateRoute";
 import CreateAssignment from "../Pages/CreateAssignment";
+import Assignments from "../Pages/Assignments";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
       {
         path: "create-assignment",
         element: <CreateAssignment />,
+      },
+      {
+        path: "assignments",
+        element: <Assignments />,
       },
       {
         path: "post",
