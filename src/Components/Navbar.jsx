@@ -24,8 +24,11 @@ const Navbar = () => {
       </li>
     </>
   );
+
   return (
-    <div className="navbar bg-base-100 border-b-2">
+    <div className="navbar bg-base-100 bg-opacity-70 backdrop-blur-lg border-b-2 rounded-b-2xl mb-3 shadow-lg sticky top-0 z-50">
+      {" "}
+      {/* Added opacity and blur classes */}
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -52,9 +55,9 @@ const Navbar = () => {
             {user && privateLinks}
           </ul>
         </div>
-        <button className="btn btn-ghost text-xl font-bold hover:bg-neutral bg-neutral  text-neutral-content">
+        <button className="btn btn-ghost text-xl font-bold hover:bg-neutral bg-neutral text-neutral-content">
           <FcReadingEbook className="text-2xl" /> Study
-          <span className="text-accent "> Buddies</span>
+          <span className="text-accent"> Buddies</span>
         </button>
       </div>
       <div className="navbar-center hidden lg:flex">
@@ -83,17 +86,15 @@ const Navbar = () => {
                 </div>
                 <ul
                   tabIndex={0}
-                  className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+                  className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow-lg"
                 >
                   <li>
-                    <a className="justify-between">
-                      Profile
-                      <span className="badge">New</span>
-                    </a>
+                    <Link to={"/create-assignment"}>Create Assignments</Link>
                   </li>
                   <li>
-                    <a>Settings</a>
+                    <Link>My Attempted Assignments</Link>
                   </li>
+
                   <li>
                     <a>Logout</a>
                   </li>
