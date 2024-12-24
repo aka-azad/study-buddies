@@ -3,8 +3,8 @@ import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import auth from "../firebase/firebase.config";
-import { AuthContext } from "../Context/AuthProvider";
 import axios from "axios";
+import AuthContext from "../Context/AuthContext";
 
 const Signup = () => {
   const { setLoading, signUpWithEmailPassword } = useContext(AuthContext);

@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { AuthContext } from "../Context/AuthProvider";
+import AuthContext from "../Context/AuthContext";
 
 const MyAttemptedAssignments = () => {
   const { user } = useContext(AuthContext);
@@ -10,7 +10,9 @@ const MyAttemptedAssignments = () => {
   useEffect(() => {
     if (user) {
       axios
-        .get(`http://localhost:5000/submissions?submittedBy=${user.email}`)
+        .get(`http://localhost:5000/submissions?submittedBy=${user.email}`, {
+          withCredentials: true,
+        })
         .then((res) => {
           setAssignments(res.data);
         })

@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router";
 import axios from "axios";
 import { FaEdit, FaTrashAlt, FaEye } from "react-icons/fa";
 import Swal from "sweetalert2";
-import { AuthContext } from "../Context/AuthProvider";
+import AuthContext from "../Context/AuthContext";
 
 const AssignmentsPage = () => {
   const { user } = useContext(AuthContext);
@@ -48,7 +48,9 @@ const AssignmentsPage = () => {
   const handleDelete = (assignment) => {
     if (assignment?.placedBy === user.email) {
       axios
-        .delete(`http://localhost:5000/assignments/${assignment._id}`)
+        .delete(`http://localhost:5000/assignments/${assignment._id}`, {
+          withCredentials: true,
+        })
         .then((res) => {
           if (res.data.deletedCount > 0) {
             setAssignments(assignments.filter((a) => a._id !== assignment._id));

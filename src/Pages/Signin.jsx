@@ -3,7 +3,7 @@ import { Link, Navigate } from "react-router";
 import { toast } from "react-toastify";
 import { FcGoogle } from "react-icons/fc";
 import axios from "axios";
-import { AuthContext } from "../Context/AuthProvider";
+import AuthContext from "../Context/AuthContext";
 
 const Signin = () => {
   const { user, signInWithEmailPassword, signInWithGoogle, setLoading } =

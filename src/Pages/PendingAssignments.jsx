@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { AuthContext } from "../Context/AuthProvider";
+import AuthContext from "../Context/AuthContext";
 
 const PendingAssignments = () => {
   const { user } = useContext(AuthContext);
@@ -13,7 +13,9 @@ const PendingAssignments = () => {
   useEffect(() => {
     if (user) {
       axios
-        .get("http://localhost:5000/submissions/pending")
+        .get("http://localhost:5000/submissions/pending", {
+          withCredentials: true,
+        })
         .then((res) => {
           const filteredAssignments = res.data.filter(
             (assignment) => assignment.examinee_email !== user.email
@@ -41,7 +43,7 @@ const PendingAssignments = () => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const marks = formData.get("marks");
-    const obtainedMarks = Number(marks)
+    const obtainedMarks = Number(marks);
     const feedback = formData.get("feedback");
     const assignmentMarksMargin = Number(assignment.marks);
     if (assignmentMarksMargin < obtainedMarks) {
@@ -58,7 +60,7 @@ const PendingAssignments = () => {
     axios
       .patch(
         `http://localhost:5000/submissions/${selectedAssignment._id}`,
-        updatedAssignment
+        updatedAssignment , {withCredentials: true}
       )
       .then((res) => {
         if (res.data.modifiedCount > 0) {

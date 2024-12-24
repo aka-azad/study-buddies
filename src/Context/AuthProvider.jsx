@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { createContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import auth from "../firebase/firebase.config";
 import {
   createUserWithEmailAndPassword,
@@ -9,8 +9,8 @@ import {
   signInWithPopup,
   signOut,
 } from "firebase/auth";
-
-export const AuthContext = createContext(null);
+import AuthContext from "./AuthContext";
+import axios from "axios";
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -38,11 +38,18 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (acc) => {
+      setUser(acc);
       if (acc) {
-        setUser(acc), setLoading(false);
+        const user = { email: acc.email };
+
+        axios
+          .post("http://localhost:5000/login", user, {
+            withCredentials: true,
+          })
       } else {
-        setUser(null), setLoading(false);
+        setUser(null);
       }
+      setLoading(false);
     });
     return () => unsubscribe();
   }, []);

@@ -3,8 +3,8 @@ import { useParams, Link, useNavigate } from "react-router";
 import axios from "axios";
 import { FaArrowLeft } from "react-icons/fa";
 import { toast } from "react-toastify";
-import { AuthContext } from "../Context/AuthProvider";
 import Swal from "sweetalert2";
+import AuthContext from "../Context/AuthContext";
 
 const AssignmentDetails = () => {
   const { id } = useParams();
@@ -16,7 +16,7 @@ const AssignmentDetails = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/assignments/${id}`)
+      .get(`http://localhost:5000/assignments/${id}`, { withCredentials: true })
       .then((res) => {
         setAssignment(res.data);
       })
@@ -51,7 +51,9 @@ const AssignmentDetails = () => {
     };
 
     axios
-      .post("http://localhost:5000/submissions", submissionData)
+      .post("http://localhost:5000/submissions", submissionData, {
+        withCredentials: true,
+      })
       .then((res) => {
         if (res.data.insertedId) {
           toast.success("Assignment submitted successfully.");

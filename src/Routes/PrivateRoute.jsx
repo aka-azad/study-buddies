@@ -1,8 +1,7 @@
 import PropTypes from "prop-types";
 import { useContext } from "react";
 import { Navigate } from "react-router";
-import { AuthContext } from "../Context/AuthProvider";
-// import LottieLoader from "../Components/LottieLoader";
+import AuthContext from "../Context/AuthContext";
 
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useContext(AuthContext);

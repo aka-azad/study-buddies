@@ -1,26 +1,27 @@
-import { useContext, useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import { AuthContext } from '../Context/AuthProvider';
-import axios from 'axios';
-import { toast } from 'react-toastify';
+import { useContext, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import axios from "axios";
+import { toast } from "react-toastify";
+import AuthContext from "../Context/AuthContext";
 
 const UpdateAssignment = () => {
   const { id } = useParams();
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [marks, setMarks] = useState('');
-  const [thumbnailURL, setThumbnailURL] = useState('');
-  const [difficulty, setDifficulty] = useState('easy');
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [marks, setMarks] = useState("");
+  const [thumbnailURL, setThumbnailURL] = useState("");
+  const [difficulty, setDifficulty] = useState("easy");
   const [dueDate, setDueDate] = useState(new Date());
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/assignments/${id}`)
-      .then(res => {
+    axios
+      .get(`http://localhost:5000/assignments/${id}`)
+      .then((res) => {
         const assignment = res.data;
         setTitle(assignment.title);
         setDescription(assignment.description);
@@ -29,9 +30,9 @@ const UpdateAssignment = () => {
         setDifficulty(assignment.difficulty);
         setDueDate(new Date(assignment.dueDate));
       })
-      .catch(error => {
-        console.error('Error fetching assignment:', error);
-        setMessage('Failed to load assignment.');
+      .catch((error) => {
+        console.error("Error fetching assignment:", error);
+        setMessage("Failed to load assignment.");
       });
   }, [id]);
 
@@ -47,18 +48,21 @@ const UpdateAssignment = () => {
       placedBy: user.email,
     };
 
-    axios.put(`http://localhost:5000/assignments/${id}`, updatedAssignment)
-      .then(res => {
+    axios
+      .put(`http://localhost:5000/assignments/${id}`, updatedAssignment, {
+        withCredentials: true,
+      })
+      .then((res) => {
         if (res.data.modifiedCount > 0) {
-          toast.success('Assignment updated successfully.');
-          navigate('/assignments');
+          toast.success("Assignment updated successfully.");
+          navigate("/assignments");
         } else {
-          setMessage('Unable to update assignment.');
+          setMessage("Unable to update assignment.");
         }
       })
-      .catch(error => {
-        console.error('Error updating assignment:', error);
-        setMessage('Failed to update assignment.');
+      .catch((error) => {
+        console.error("Error updating assignment:", error);
+        setMessage("Failed to update assignment.");
       });
   };
 
@@ -67,7 +71,10 @@ const UpdateAssignment = () => {
       <h1 className="text-4xl text-center font-bold border-b-2 rounded-b-lg shadow-md shadow-emerald-100 pb-6 mb-8">
         Update Assignment
       </h1>
-      <form onSubmit={handleSubmit} className="max-w-lg mx-auto p-6 rounded-lg shadow-md">
+      <form
+        onSubmit={handleSubmit}
+        className="max-w-lg mx-auto p-6 rounded-lg shadow-md"
+      >
         <div className="mb-4">
           <label className="block text-sm font-medium mb-1">Title</label>
           <input
@@ -98,7 +105,9 @@ const UpdateAssignment = () => {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-sm font-medium mb-1">Thumbnail Image URL</label>
+          <label className="block text-sm font-medium mb-1">
+            Thumbnail Image URL
+          </label>
           <input
             type="url"
             className="input input-bordered w-full"
@@ -109,7 +118,9 @@ const UpdateAssignment = () => {
         </div>
         <div className="mb-4 flex space-x-4">
           <div className="flex-grow">
-            <label className="block text-sm font-medium mb-1">Difficulty Level</label>
+            <label className="block text-sm font-medium mb-1">
+              Difficulty Level
+            </label>
             <select
               className="select select-bordered w-full"
               value={difficulty}
@@ -130,7 +141,9 @@ const UpdateAssignment = () => {
             />
           </div>
         </div>
-        <button type="submit" className="btn btn-primary w-full">Update Assignment</button>
+        <button type="submit" className="btn btn-primary w-full">
+          Update Assignment
+        </button>
       </form>
       {message && <p className="text-center mt-4">{message}</p>}
     </div>

@@ -1,9 +1,9 @@
 import { useContext, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { AuthContext } from "../Context/AuthProvider";
 import axios from "axios";
 import { toast } from "react-toastify";
+import AuthContext from "../Context/AuthContext";
 
 const CreateAssignment = () => {
   const { user } = useContext(AuthContext);
@@ -28,7 +28,7 @@ const CreateAssignment = () => {
     };
 
     axios
-      .post("http://localhost:5000/assignments", assignmentData)
+      .post("http://localhost:5000/assignments", assignmentData, {withCredentials: true})
       .then((res) => {
         if (res?.data?.insertedId) {
           toast.success("Assignment Created");

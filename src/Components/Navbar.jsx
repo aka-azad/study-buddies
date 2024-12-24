@@ -2,7 +2,7 @@ import { Link, NavLink } from "react-router";
 import ThemeToggle from "./ThemeToggle";
 import { FcReadingEbook } from "react-icons/fc";
 import { useContext } from "react";
-import { AuthContext } from "../Context/AuthProvider";
+import AuthContext from "../Context/AuthContext";
 
 const Navbar = () => {
   const { user, signOutUser } = useContext(AuthContext);
