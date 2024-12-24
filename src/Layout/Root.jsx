@@ -4,8 +4,8 @@ import Footer from "../Components/Footer";
 
 const Root = () => {
   return (
-    <div>
-      <div className="sm:w-10/12 mx-auto">
+    <div className="flex flex-col min-h-screen">
+      <div className="sm:w-10/12 mx-auto flex-grow">
         <Navbar />
         <Outlet />
       </div>

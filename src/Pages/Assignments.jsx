@@ -9,28 +9,40 @@ const AssignmentsPage = () => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const [assignments, setAssignments] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [difficultyFilter, setDifficultyFilter] = useState("all");
 
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/assignments")
-      .then((response) => {
-        setAssignments(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching assignments:", error);
-      });
-  }, []);
+    const fetchAssignments = () => {
+      axios
+        .get("http://localhost:5000/assignments", {
+          params: {
+            search: searchQuery,
+            difficulty:
+              difficultyFilter !== "all" ? difficultyFilter : undefined,
+          },
+        })
+        .then((response) => {
+          setAssignments(response.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching assignments:", error);
+        });
+    };
+
+    fetchAssignments();
+  }, [searchQuery, difficultyFilter]);
 
   const handleUpdate = (assignment) => {
-    console.log(assignment.placedBy, user?.email)
     if (assignment.placedBy === user?.email) {
       navigate(`/assignments/${assignment._id}/edit`);
-    } else
+    } else {
       Swal.fire(
         "Error!",
         "You can only Edit assignments you created.",
         "error"
       );
+    }
   };
 
   const handleDelete = (assignment) => {
@@ -61,7 +73,6 @@ const AssignmentsPage = () => {
   };
 
   const confirmDelete = (assignment) => {
-
     if (assignment?.placedBy === user.email) {
       Swal.fire({
         title: "Are you sure?",
@@ -87,10 +98,31 @@ const AssignmentsPage = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-4xl text-center font-bold border-b-2 rounded-b-lg shadow-md shadow-emerald-100 pb-6 mb-8">Assignments</h1>
+      <h1 className="text-4xl text-center font-bold border-b-2 rounded-b-lg shadow-md shadow-emerald-100 pb-6 mb-8">
+        Assignments
+      </h1>
+      <div className="mb-4 flex justify-between items-center">
+        <input
+          type="text"
+          placeholder="Search by title..."
+          className="input input-bordered w-full max-w-xs"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+        <select
+          className="select select-bordered w-full max-w-xs"
+          value={difficultyFilter}
+          onChange={(e) => setDifficultyFilter(e.target.value)}
+        >
+          <option value="all">All Difficulties</option>
+          <option value="easy">Easy</option>
+          <option value="medium">Medium</option>
+          <option value="hard">Hard</option>
+        </select>
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {assignments.map((assignment) => (
-          <div key={assignment._id} className="card bg-base-100  shadow-md">
+          <div key={assignment._id} className="card bg-base-100 shadow-md">
             <figure className="h-52">
               <img src={assignment.thumbnailURL} alt={assignment.title} />
             </figure>

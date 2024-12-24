@@ -16,7 +16,7 @@ const PendingAssignments = () => {
         .get("http://localhost:5000/submissions/pending")
         .then((res) => {
           const filteredAssignments = res.data.filter(
-            (assignment) => assignment.submittedBy !== user.email
+            (assignment) => assignment.examinee_email !== user.email
           );
           setAssignments(filteredAssignments);
         })
@@ -37,19 +37,24 @@ const PendingAssignments = () => {
     document.getElementById("give_mark_modal").close();
   };
 
-  const handleMarking = (e) => {
+  const handleMarking = (e, assignment) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const marks = formData.get("marks");
+    const obtainedMarks = Number(marks)
     const feedback = formData.get("feedback");
+    const assignmentMarksMargin = Number(assignment.marks);
+    if (assignmentMarksMargin < obtainedMarks) {
+      toast.error(`Obtained Marks Can't be higher than ${assignment.marks}`);
+      return;
+    }
 
     const updatedAssignment = {
       status: "completed",
-      marks,
+      obtained_marks: obtainedMarks,
       feedback,
     };
 
-    console.log(selectedAssignment)
     axios
       .patch(
         `http://localhost:5000/submissions/${selectedAssignment._id}`,
@@ -72,11 +77,13 @@ const PendingAssignments = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Pending Assignments</h1>
+      <h1 className="text-4xl text-center font-bold border-b-2 rounded-b-lg shadow-md shadow-emerald-100 pb-6 mb-8">
+        Pending Assignments
+      </h1>
       <div className="overflow-x-auto">
         <table className="table-auto w-full">
           <thead>
-            <tr>
+            <tr className="bg-base-300">
               <th className="px-4 py-2">Title</th>
               <th className="px-4 py-2">Marks</th>
               <th className="px-4 py-2">Examinee Name</th>
@@ -125,7 +132,7 @@ const PendingAssignments = () => {
               <p>
                 <strong>Quick Note:</strong> {selectedAssignment.note}
               </p>
-              <form onSubmit={handleMarking}>
+              <form onSubmit={(e) => handleMarking(e, selectedAssignment)}>
                 <div className="mb-4">
                   <label className="block text-sm font-medium mb-1">
                     Marks

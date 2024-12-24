@@ -94,7 +94,7 @@ const Navbar = () => {
                     <Link to={"/create-assignment"}>Create Assignments</Link>
                   </li>
                   <li>
-                    <Link>My Attempted Assignments</Link>
+                    <Link to={'/my-assignments'}>My Assignments</Link>
                   </li>
 
                   <li>
