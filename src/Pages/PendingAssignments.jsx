@@ -4,11 +4,14 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import AuthContext from "../Context/AuthContext";
 import NoData from "../Components/NoData";
+import LottieLoader from "../Components/LottieLoader";
 
 const PendingAssignments = () => {
   const { user } = useContext(AuthContext);
   const [assignments, setAssignments] = useState([]);
   const [selectedAssignment, setSelectedAssignment] = useState(null);
+  const [loading, setLoading] = useState(true);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,6 +25,7 @@ const PendingAssignments = () => {
             (assignment) => assignment.examinee_email !== user.email
           );
           setAssignments(filteredAssignments);
+          setLoading(false);
         })
         .catch((error) => {
           console.error("Error fetching pending assignments:", error);
@@ -84,7 +88,9 @@ const PendingAssignments = () => {
       <h1 className="text-4xl text-center font-bold border-b-2 rounded-b-lg shadow-md shadow-emerald-100 pb-6 mb-8">
         Pending Assignments
       </h1>
-      {assignments.length < 1 ? (
+      {loading && <LottieLoader />}
+
+      {assignments.length < 1 && !loading ? (
         <NoData />
       ) : (
         <div className="overflow-x-auto">

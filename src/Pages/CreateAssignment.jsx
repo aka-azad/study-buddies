@@ -4,9 +4,10 @@ import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 import { toast } from "react-toastify";
 import AuthContext from "../Context/AuthContext";
+import LottieLoader from "../Components/LottieLoader";
 
 const CreateAssignment = () => {
-  const { user } = useContext(AuthContext);
+  const { user, loading } = useContext(AuthContext);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [marks, setMarks] = useState("");
@@ -28,13 +29,19 @@ const CreateAssignment = () => {
     };
 
     axios
-      .post("http://localhost:5000/assignments", assignmentData, {withCredentials: true})
+      .post("http://localhost:5000/assignments", assignmentData, {
+        withCredentials: true,
+      })
       .then((res) => {
         if (res?.data?.insertedId) {
           toast.success("Assignment Created");
         } else setMessage("Unable to Create Assignment");
       });
   };
+
+  if (loading) {
+    return <LottieLoader />;
+  }
 
   return (
     <div className="container mx-auto p-4">

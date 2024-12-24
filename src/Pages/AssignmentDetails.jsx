@@ -5,19 +5,23 @@ import { FaArrowLeft } from "react-icons/fa";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import AuthContext from "../Context/AuthContext";
+import LottieLoader from "../Components/LottieLoader";
 
 const AssignmentDetails = () => {
   const { id } = useParams();
-  const { user } = useContext(AuthContext);
+  const { user, loading: userLoading } = useContext(AuthContext);
   const navigate = useNavigate();
   const [assignment, setAssignment] = useState(null);
   const [googleDocsLink, setGoogleDocsLink] = useState("");
   const [note, setNote] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     axios
       .get(`http://localhost:5000/assignments/${id}`, { withCredentials: true })
       .then((res) => {
+        setLoading(false);
+
         setAssignment(res.data);
       })
       .catch((error) => {
@@ -69,11 +73,16 @@ const AssignmentDetails = () => {
       });
   };
 
+  if (userLoading) {
+    return <LottieLoader />;
+  }
+
   return (
     <div className="container mx-auto lg:w-8/12 md:w-10/12 p-4">
       <Link to="/assignments" className="btn btn-secondary mb-4">
         <FaArrowLeft className="mr-2" /> Back to Assignments
       </Link>
+      {loading && <LottieLoader />}
       {assignment && (
         <div className=" p-6 rounded-lg shadow-md">
           <h1 className="text-2xl font-bold mb-4">{assignment.title}</h1>

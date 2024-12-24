@@ -3,10 +3,12 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import AuthContext from "../Context/AuthContext";
 import NoData from "../Components/NoData";
+import LottieLoader from "../Components/LottieLoader";
 
 const MyAttemptedAssignments = () => {
   const { user } = useContext(AuthContext);
   const [assignments, setAssignments] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (user) {
@@ -16,6 +18,7 @@ const MyAttemptedAssignments = () => {
         })
         .then((res) => {
           setAssignments(res.data);
+          setLoading(false);
         })
         .catch((error) => {
           console.error("Error fetching submitted assignments:", error);
@@ -29,7 +32,8 @@ const MyAttemptedAssignments = () => {
       <h1 className="text-4xl text-center font-bold border-b-2 rounded-b-lg shadow-md shadow-emerald-100 pb-6 mb-8">
         Submitted Assignments
       </h1>
-      {assignments.length < 1 ? (
+      {loading && <LottieLoader />}
+      {assignments.length < 1 && !loading ? (
         <NoData />
       ) : (
         <div className="overflow-x-auto">

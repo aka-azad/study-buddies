@@ -5,13 +5,15 @@ import { FaEdit, FaTrashAlt, FaEye } from "react-icons/fa";
 import Swal from "sweetalert2";
 import AuthContext from "../Context/AuthContext";
 import NoData from "../Components/NoData";
+import LottieLoader from "../Components/LottieLoader";
 
 const AssignmentsPage = () => {
-  const { user } = useContext(AuthContext);
+  const { user, loading: userLoading } = useContext(AuthContext);
   const navigate = useNavigate();
   const [assignments, setAssignments] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [difficultyFilter, setDifficultyFilter] = useState("all");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchAssignments = () => {
@@ -24,6 +26,7 @@ const AssignmentsPage = () => {
           },
         })
         .then((response) => {
+          setLoading(false);
           setAssignments(response.data);
         })
         .catch((error) => {
@@ -99,6 +102,10 @@ const AssignmentsPage = () => {
     }
   };
 
+  if (userLoading) {
+    return <LottieLoader />;
+  }
+
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-4xl text-center font-bold border-b-2 rounded-b-lg shadow-md shadow-emerald-100 pb-6 mb-8">
@@ -130,7 +137,8 @@ const AssignmentsPage = () => {
           "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
         }}`}
       >
-        {assignments.length < 1 ? (
+        {loading && <LottieLoader />}
+        {assignments.length < 1 && !loading ? (
           <NoData></NoData>
         ) : (
           assignments.map((assignment) => (
