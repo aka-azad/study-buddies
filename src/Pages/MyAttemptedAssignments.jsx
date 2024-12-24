@@ -49,7 +49,7 @@ const MyAttemptedAssignments = () => {
             </thead>
             <tbody>
               {assignments.map((assignment) => (
-                <tr key={assignment._id} className="hover:bg-gray-100">
+                <tr key={assignment._id}>
                   <td className="border px-4 py-2">{assignment.title}</td>
                   <td className="border px-4 py-2">{assignment.status}</td>
                   <td className="border px-4 py-2">{assignment.marks}</td>

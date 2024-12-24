@@ -39,14 +39,15 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (acc) => {
       setUser(acc);
+      const user = { email: acc?.email };
       if (acc) {
-        const user = { email: acc.email };
-
-        axios
-          .post("http://localhost:5000/login", user, {
-            withCredentials: true,
-          })
+        axios.post("http://localhost:5000/login", user, {
+          withCredentials: true,
+        });
       } else {
+        axios.post("http://localhost:5000/logout", user, {
+          withCredentials: true,
+        });
         setUser(null);
       }
       setLoading(false);

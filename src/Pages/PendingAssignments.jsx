@@ -70,6 +70,10 @@ const PendingAssignments = () => {
       )
       .then((res) => {
         if (res.data.modifiedCount > 0) {
+          const newList = assignments.filter(
+            (assign) => assign._id !== assignment._id
+          );
+          setAssignments(newList);
           toast.success("Assignment marked successfully.");
           closeAssignmentModal();
           navigate("/pending-assignments");
@@ -112,12 +116,14 @@ const PendingAssignments = () => {
                     {assignment.examinee_name}
                   </td>
                   <td className="border px-4 py-2">
-                    <button
-                      onClick={() => openAssignmentModal(assignment)}
-                      className="btn btn-primary"
-                    >
-                      Give Mark
-                    </button>
+                    <div className="w-fit mx-auto">
+                      <button
+                        onClick={() => openAssignmentModal(assignment)}
+                        className="btn btn-primary"
+                      >
+                        Give Mark
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}

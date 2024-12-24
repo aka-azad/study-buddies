@@ -8,9 +8,8 @@ import { useLocation } from "react-router";
 
 const Navbar = () => {
   const { user, signOutUser, loading } = useContext(AuthContext);
-
   const location = useLocation();
-  console.log(location.pathname);
+
   const links = (
     <>
       <li>
