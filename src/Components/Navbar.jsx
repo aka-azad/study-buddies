@@ -3,10 +3,14 @@ import ThemeToggle from "./ThemeToggle";
 import { FcReadingEbook } from "react-icons/fc";
 import { useContext } from "react";
 import AuthContext from "../Context/AuthContext";
+import SmallLottieLoader from "./SmallLottieLoader";
+import { useLocation } from "react-router";
 
 const Navbar = () => {
-  const { user, signOutUser } = useContext(AuthContext);
+  const { user, signOutUser, loading } = useContext(AuthContext);
 
+  const location = useLocation();
+  console.log(location.pathname);
   const links = (
     <>
       <li>
@@ -70,7 +74,9 @@ const Navbar = () => {
       </div>
       <div className="navbar-end">
         <ThemeToggle />
-        {user ? (
+        {loading ? (
+          <SmallLottieLoader />
+        ) : user ? (
           <>
             <div
               className="tooltip tooltip-bottom ml-3"
@@ -94,7 +100,7 @@ const Navbar = () => {
                     <Link to={"/create-assignment"}>Create Assignments</Link>
                   </li>
                   <li>
-                    <Link to={'/my-assignments'}>My Assignments</Link>
+                    <Link to={"/my-assignments"}>My Assignments</Link>
                   </li>
 
                   <li>
@@ -112,11 +118,16 @@ const Navbar = () => {
               Log Out
             </button>
           </>
+        ) : location.pathname === "/signin" ? (
+          <Link to={"/register"} className="btn ml-3 btn-outline btn-info ">
+            Register
+          </Link>
         ) : (
           <Link to={"/signin"} className="btn ml-3 btn-outline btn-info ">
             Log In
           </Link>
         )}
+        {}
       </div>
     </div>
   );

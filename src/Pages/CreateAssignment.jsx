@@ -4,10 +4,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 import { toast } from "react-toastify";
 import AuthContext from "../Context/AuthContext";
-import LottieLoader from "../Components/LottieLoader";
 
 const CreateAssignment = () => {
-  const { user, loading } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [marks, setMarks] = useState("");
@@ -39,9 +38,6 @@ const CreateAssignment = () => {
       });
   };
 
-  if (loading) {
-    return <LottieLoader />;
-  }
 
   return (
     <div className="container mx-auto p-4">

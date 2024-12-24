@@ -9,7 +9,7 @@ import LottieLoader from "../Components/LottieLoader";
 
 const AssignmentDetails = () => {
   const { id } = useParams();
-  const { user, loading: userLoading } = useContext(AuthContext);
+  const { user} = useContext(AuthContext);
   const navigate = useNavigate();
   const [assignment, setAssignment] = useState(null);
   const [googleDocsLink, setGoogleDocsLink] = useState("");
@@ -73,10 +73,7 @@ const AssignmentDetails = () => {
       });
   };
 
-  if (userLoading) {
-    return <LottieLoader />;
-  }
-
+ 
   return (
     <div className="container mx-auto lg:w-8/12 md:w-10/12 p-4">
       <Link to="/assignments" className="btn btn-secondary mb-4">

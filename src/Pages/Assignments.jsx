@@ -8,7 +8,7 @@ import NoData from "../Components/NoData";
 import LottieLoader from "../Components/LottieLoader";
 
 const AssignmentsPage = () => {
-  const { user, loading: userLoading } = useContext(AuthContext);
+  const { user,  } = useContext(AuthContext);
   const navigate = useNavigate();
   const [assignments, setAssignments] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -102,10 +102,7 @@ const AssignmentsPage = () => {
     }
   };
 
-  if (userLoading) {
-    return <LottieLoader />;
-  }
-
+  
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-4xl text-center font-bold border-b-2 rounded-b-lg shadow-md shadow-emerald-100 pb-6 mb-8">
