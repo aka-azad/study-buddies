@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import axios from "axios";
 import { FaEdit, FaTrashAlt, FaEye } from "react-icons/fa";
 import Swal from "sweetalert2";
@@ -47,6 +47,15 @@ const AssignmentsPage = () => {
         "error"
       );
     }
+  };
+
+  const handleView = (assignment) => {
+    if (user) {
+      navigate(`/assignments/${assignment._id}`);
+    } else
+      navigate("/signin", {
+        state: `/assignments/${assignment._id}`,
+      });
   };
 
   const handleDelete = (assignment) => {
@@ -155,12 +164,13 @@ const AssignmentsPage = () => {
                   <strong>Difficulty:</strong> {assignment.difficulty}
                 </p>
                 <div className="card-actions justify-between">
-                  <Link
-                    to={`/assignments/${assignment._id}`}
+                  <button
                     className="btn btn-primary text-lg"
+                    onClick={() => handleView(assignment)}
                   >
                     <FaEye className="mr-1 text-xl" /> View
-                  </Link>
+                  </button>
+
                   <button
                     onClick={() => handleUpdate(assignment)}
                     className="btn btn-secondary text-lg"

@@ -20,7 +20,7 @@ const UpdateAssignment = () => {
 
   useEffect(() => {
     axios
-      .get(`https://study-buddies-server.vercel.app/assignments/${id}`)
+      .get(`https://study-buddies-server.vercel.app/assignments/${id}`, {withCredentials: true})
       .then((res) => {
         const assignment = res.data;
         setTitle(assignment.title);

@@ -26,8 +26,8 @@ const AuthProvider = ({ children }) => {
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
-  const signInWithGoogle = () => {
-    return signInWithPopup(auth, googleProvider);
+  const signInWithGoogle = async () => {
+    return await signInWithPopup(auth, googleProvider);
   };
 
   const signOutUser = () => {

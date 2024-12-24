@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Link, Navigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { FcGoogle } from "react-icons/fc";
 import axios from "axios";
@@ -9,13 +9,17 @@ const Signin = () => {
   const { user, signInWithEmailPassword, signInWithGoogle, setLoading } =
     useContext(AuthContext);
 
+  const location = useLocation();
+  const navigate = useNavigate();
+  const from = location.state || "/";
+
+  if (user) {
+    navigate(from);
+  }
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-
-  if (user) {
-    return <Navigate to={"/"} />;
-  }
 
   const validatePassword = (password) => {
     if (!/[A-Z]/.test(password)) {
@@ -43,6 +47,7 @@ const Signin = () => {
     signInWithEmailPassword(email, password)
       .then(() => {
         setLoading(false);
+        navigate(from);
       })
       .catch((err) => {
         setLoading(false);
@@ -66,6 +71,7 @@ const Signin = () => {
           .then((res) => res.data)
           .then((data) => {
             data.insertedId && toast.success("Account Registered Successfully");
+            navigate(from);
           })
           .catch((err) => console.log(err));
       })
