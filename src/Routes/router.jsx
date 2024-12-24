@@ -10,6 +10,7 @@ import UpdateAssignment from "../Pages/UpdateAssignment";
 import AssignmentDetails from "../Pages/AssignmentDetails";
 import PendingAssignments from "../Pages/PendingAssignments";
 import MyAttemptedAssignments from "../Pages/MyAttemptedAssignments";
+import ErrorPage from "../Pages/ErrorPage";
 
 const router = createBrowserRouter([
   {
@@ -29,32 +30,52 @@ const router = createBrowserRouter([
         element: <Signup />,
       },
       {
-        path: "create-assignment",
-        element: <CreateAssignment />,
-      },
-      {
         path: "assignments",
         element: <Assignments />,
       },
       {
+        path: "create-assignment",
+        element: (
+          <PrivateRoute>
+            <CreateAssignment />
+          </PrivateRoute>
+        ),
+      },
+      {
         path: "pending-assignments",
-        element: <PendingAssignments />,
+        element: (
+          <PrivateRoute>
+            <PendingAssignments />
+          </PrivateRoute>
+        ),
       },
       {
         path: "my-assignments",
-        element: <MyAttemptedAssignments />,
+        element: (
+          <PrivateRoute>
+            <MyAttemptedAssignments />
+          </PrivateRoute>
+        ),
       },
       {
         path: "assignments/:id",
-        element: <AssignmentDetails />,
+        element: (
+          <PrivateRoute>
+            <AssignmentDetails />
+          </PrivateRoute>
+        ),
       },
       {
         path: "assignments/:id/edit",
-        element: <UpdateAssignment />,
+        element: (
+          <PrivateRoute>
+            <UpdateAssignment />
+          </PrivateRoute>
+        ),
       },
       {
-        path: "post",
-        element: <PrivateRoute></PrivateRoute>,
+        path: "*",
+        element: <ErrorPage />,
       },
     ],
   },

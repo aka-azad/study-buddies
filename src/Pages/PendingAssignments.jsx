@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import axios from "axios";
 import { toast } from "react-toastify";
 import AuthContext from "../Context/AuthContext";
+import NoData from "../Components/NoData";
 
 const PendingAssignments = () => {
   const { user } = useContext(AuthContext);
@@ -60,7 +61,8 @@ const PendingAssignments = () => {
     axios
       .patch(
         `http://localhost:5000/submissions/${selectedAssignment._id}`,
-        updatedAssignment , {withCredentials: true}
+        updatedAssignment,
+        { withCredentials: true }
       )
       .then((res) => {
         if (res.data.modifiedCount > 0) {
@@ -82,35 +84,41 @@ const PendingAssignments = () => {
       <h1 className="text-4xl text-center font-bold border-b-2 rounded-b-lg shadow-md shadow-emerald-100 pb-6 mb-8">
         Pending Assignments
       </h1>
-      <div className="overflow-x-auto">
-        <table className="table-auto w-full">
-          <thead>
-            <tr className="bg-base-300">
-              <th className="px-4 py-2">Title</th>
-              <th className="px-4 py-2">Marks</th>
-              <th className="px-4 py-2">Examinee Name</th>
-              <th className="px-4 py-2">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {assignments.map((assignment) => (
-              <tr key={assignment._id}>
-                <td className="border px-4 py-2">{assignment.title}</td>
-                <td className="border px-4 py-2">{assignment.marks}</td>
-                <td className="border px-4 py-2">{assignment.examinee_name}</td>
-                <td className="border px-4 py-2">
-                  <button
-                    onClick={() => openAssignmentModal(assignment)}
-                    className="btn btn-primary"
-                  >
-                    Give Mark
-                  </button>
-                </td>
+      {assignments.length < 1 ? (
+        <NoData />
+      ) : (
+        <div className="overflow-x-auto">
+          <table className="table-auto w-full border-collapse">
+            <thead>
+              <tr className="bg-base-300">
+                <th className="px-4 py-2">Title</th>
+                <th className="px-4 py-2">Marks</th>
+                <th className="px-4 py-2">Examinee Name</th>
+                <th className="px-4 py-2">Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              {assignments.map((assignment) => (
+                <tr key={assignment._id}>
+                  <td className="border px-4 py-2">{assignment.title}</td>
+                  <td className="border px-4 py-2">{assignment.marks}</td>
+                  <td className="border px-4 py-2">
+                    {assignment.examinee_name}
+                  </td>
+                  <td className="border px-4 py-2">
+                    <button
+                      onClick={() => openAssignmentModal(assignment)}
+                      className="btn btn-primary"
+                    >
+                      Give Mark
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
 
       <dialog
         id="give_mark_modal"

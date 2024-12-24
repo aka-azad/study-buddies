@@ -1,3 +1,5 @@
+import { Link } from "react-router";
+
 const Banner = () => {
   return (
     <>
@@ -15,7 +17,7 @@ const Banner = () => {
             Collaborate, learn, and grow together with friends. <br /> Create
             assignments, complete them, and grade your friend&apos;s work.
           </p>
-          <button className="btn btn-primary">Get Started</button>
+          <Link to={'/assignments'} className="btn btn-primary">Get Started</Link>
         </div>
       </div>
     </>

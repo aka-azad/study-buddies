@@ -4,6 +4,7 @@ import axios from "axios";
 import { FaEdit, FaTrashAlt, FaEye } from "react-icons/fa";
 import Swal from "sweetalert2";
 import AuthContext from "../Context/AuthContext";
+import NoData from "../Components/NoData";
 
 const AssignmentsPage = () => {
   const { user } = useContext(AuthContext);
@@ -122,43 +123,53 @@ const AssignmentsPage = () => {
           <option value="hard">Hard</option>
         </select>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {assignments.map((assignment) => (
-          <div key={assignment._id} className="card bg-base-100 shadow-md">
-            <figure className="h-52">
-              <img src={assignment.thumbnailURL} alt={assignment.title} />
-            </figure>
-            <div className="card-body px-3">
-              <h2 className="card-title">{assignment.title}</h2>
-              <p>
-                <strong>Marks:</strong> {assignment.marks}
-              </p>
-              <p>
-                <strong>Difficulty:</strong> {assignment.difficulty}
-              </p>
-              <div className="card-actions justify-between">
-                <Link
-                  to={`/assignments/${assignment._id}`}
-                  className="btn btn-primary text-lg"
-                >
-                  <FaEye className="mr-1 text-xl" /> View
-                </Link>
-                <button
-                  onClick={() => handleUpdate(assignment)}
-                  className="btn btn-secondary text-lg"
-                >
-                  <FaEdit className="mr-1 text-xl" /> Update
-                </button>
-                <button
-                  onClick={() => confirmDelete(assignment)}
-                  className="btn btn-error text-lg"
-                >
-                  <FaTrashAlt className="mr-1 text-xl" /> Delete
-                </button>
+
+      <div
+        className={`${
+          assignments.length > 0 &&
+          "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+        }}`}
+      >
+        {assignments.length < 1 ? (
+          <NoData></NoData>
+        ) : (
+          assignments.map((assignment) => (
+            <div key={assignment._id} className="card bg-base-100 shadow-md">
+              <figure className="h-52">
+                <img src={assignment.thumbnailURL} alt={assignment.title} />
+              </figure>
+              <div className="card-body px-3">
+                <h2 className="card-title">{assignment.title}</h2>
+                <p>
+                  <strong>Marks:</strong> {assignment.marks}
+                </p>
+                <p>
+                  <strong>Difficulty:</strong> {assignment.difficulty}
+                </p>
+                <div className="card-actions justify-between">
+                  <Link
+                    to={`/assignments/${assignment._id}`}
+                    className="btn btn-primary text-lg"
+                  >
+                    <FaEye className="mr-1 text-xl" /> View
+                  </Link>
+                  <button
+                    onClick={() => handleUpdate(assignment)}
+                    className="btn btn-secondary text-lg"
+                  >
+                    <FaEdit className="mr-1 text-xl" /> Update
+                  </button>
+                  <button
+                    onClick={() => confirmDelete(assignment)}
+                    className="btn btn-error text-lg"
+                  >
+                    <FaTrashAlt className="mr-1 text-xl" /> Delete
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))
+        )}
       </div>
     </div>
   );
