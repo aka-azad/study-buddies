@@ -9,7 +9,7 @@ import LottieLoader from "../Components/LottieLoader";
 
 const AssignmentDetails = () => {
   const { id } = useParams();
-  const { user} = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const [assignment, setAssignment] = useState(null);
   const [googleDocsLink, setGoogleDocsLink] = useState("");
@@ -18,7 +18,9 @@ const AssignmentDetails = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/assignments/${id}`, { withCredentials: true })
+      .get(`https://study-buddies-server.vercel.app/assignments/${id}`, {
+        withCredentials: true,
+      })
       .then((res) => {
         setLoading(false);
 
@@ -55,9 +57,13 @@ const AssignmentDetails = () => {
     };
 
     axios
-      .post("http://localhost:5000/submissions", submissionData, {
-        withCredentials: true,
-      })
+      .post(
+        "https://study-buddies-server.vercel.app/submissions",
+        submissionData,
+        {
+          withCredentials: true,
+        }
+      )
       .then((res) => {
         if (res.data.insertedId) {
           toast.success("Assignment submitted successfully.");
@@ -73,7 +79,6 @@ const AssignmentDetails = () => {
       });
   };
 
- 
   return (
     <div className="container mx-auto lg:w-8/12 md:w-10/12 p-4">
       <Link to="/assignments" className="btn btn-secondary mb-4">

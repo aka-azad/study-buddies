@@ -44,7 +44,7 @@ const Signup = () => {
       .then(() => {
         updateProfile(auth.currentUser, { displayName: name, photoURL });
         axios
-          .post("http://localhost:5000/users", {
+          .post("https://study-buddies-server.vercel.app/users", {
             displayName: name,
             photoURL,
             email,

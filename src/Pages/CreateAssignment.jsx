@@ -28,16 +28,19 @@ const CreateAssignment = () => {
     };
 
     axios
-      .post("http://localhost:5000/assignments", assignmentData, {
-        withCredentials: true,
-      })
+      .post(
+        "https://study-buddies-server.vercel.app/assignments",
+        assignmentData,
+        {
+          withCredentials: true,
+        }
+      )
       .then((res) => {
         if (res?.data?.insertedId) {
           toast.success("Assignment Created");
         } else setMessage("Unable to Create Assignment");
       });
   };
-
 
   return (
     <div className="container mx-auto p-4">

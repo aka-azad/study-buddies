@@ -18,7 +18,7 @@ const AssignmentsPage = () => {
   useEffect(() => {
     const fetchAssignments = () => {
       axios
-        .get("http://localhost:5000/assignments", {
+        .get("https://study-buddies-server.vercel.app/assignments", {
           params: {
             search: searchQuery,
             difficulty:
@@ -52,9 +52,12 @@ const AssignmentsPage = () => {
   const handleDelete = (assignment) => {
     if (assignment?.placedBy === user.email) {
       axios
-        .delete(`http://localhost:5000/assignments/${assignment._id}`, {
-          withCredentials: true,
-        })
+        .delete(
+          `https://study-buddies-server.vercel.app/assignments/${assignment._id}`,
+          {
+            withCredentials: true,
+          }
+        )
         .then((res) => {
           if (res.data.deletedCount > 0) {
             setAssignments(assignments.filter((a) => a._id !== assignment._id));

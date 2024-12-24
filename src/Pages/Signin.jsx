@@ -62,7 +62,7 @@ const Signin = () => {
         };
         setLoading(false);
         axios
-          .post("http://localhost:5000/users", userInfo)
+          .post("https://study-buddies-server.vercel.app/users", userInfo)
           .then((res) => res.data)
           .then((data) => {
             data.insertedId && toast.success("Account Registered Successfully");
