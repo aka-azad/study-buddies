@@ -13,12 +13,9 @@ const MyAttemptedAssignments = () => {
   useEffect(() => {
     if (user) {
       axios
-        .get(
-          `https://study-buddies-server.vercel.app/submissions?submittedBy=${user.email}`,
-          {
-            withCredentials: true,
-          }
-        )
+        .get(`http://localhost:5000/submissions?submittedBy=${user.email}`, {
+          withCredentials: true,
+        })
         .then((res) => {
           setAssignments(res.data);
           setLoading(false);

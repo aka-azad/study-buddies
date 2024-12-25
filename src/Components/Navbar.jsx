@@ -29,7 +29,7 @@ const Navbar = () => {
   );
 
   return (
-    <div className="navbar bg-base-100 bg-opacity-70 backdrop-blur-lg border-b-2 rounded-b-2xl mb-3 shadow-lg sticky top-0 z-50">
+    <div className="navbar sm:w-10/12 mx-auto bg-info bg-opacity-70 backdrop-blur-lg border-b-2 rounded-b-2xl mb-3 shadow-lg sticky top-0 z-50">
       <div className="navbar-start">
         <div className="dropdown">
           <div
@@ -78,7 +78,7 @@ const Navbar = () => {
         ) : user ? (
           <>
             <div
-              className="tooltip tooltip-bottom ml-3"
+              className="tooltip tooltip-bottom ml-3 sm:mr-0 mr-1"
               data-tip={user.displayName}
             >
               <div className="dropdown dropdown-end">
@@ -112,7 +112,7 @@ const Navbar = () => {
             </div>
             <button
               onClick={signOutUser}
-              className="btn ml-3 btn-outline btn-info hidden sm:block"
+              className="btn ml-3 btn-outline btn-warning hidden sm:block"
             >
               Log Out
             </button>
@@ -122,11 +122,10 @@ const Navbar = () => {
             Register
           </Link>
         ) : (
-          <Link to={"/signin"} className="btn ml-3 btn-outline btn-info ">
+          <Link to={"/signin"} className="btn ml-3 btn-outline btn-accent ">
             Log In
           </Link>
         )}
-        {}
       </div>
     </div>
   );

@@ -17,7 +17,7 @@ const PendingAssignments = () => {
   useEffect(() => {
     if (user) {
       axios
-        .get("https://study-buddies-server.vercel.app/submissions/pending", {
+        .get("http://localhost:5000/submissions/pending", {
           withCredentials: true,
         })
         .then((res) => {
@@ -64,7 +64,7 @@ const PendingAssignments = () => {
 
     axios
       .patch(
-        `https://study-buddies-server.vercel.app/submissions/${selectedAssignment._id}`,
+        `http://localhost:5000/submissions/${selectedAssignment._id}`,
         updatedAssignment,
         { withCredentials: true }
       )

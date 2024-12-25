@@ -1,11 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import axios from "axios";
-import { FaEdit, FaTrashAlt, FaEye } from "react-icons/fa";
 import Swal from "sweetalert2";
 import AuthContext from "../Context/AuthContext";
 import NoData from "../Components/NoData";
 import LottieLoader from "../Components/LottieLoader";
+import AssignmentCard from "../Components/AssignmentCard";
 
 const AssignmentsPage = () => {
   const { user } = useContext(AuthContext);
@@ -18,7 +18,7 @@ const AssignmentsPage = () => {
   useEffect(() => {
     const fetchAssignments = () => {
       axios
-        .get("https://study-buddies-server.vercel.app/assignments", {
+        .get("http://localhost:5000/assignments", {
           params: {
             search: searchQuery,
             difficulty:
@@ -61,12 +61,9 @@ const AssignmentsPage = () => {
   const handleDelete = (assignment) => {
     if (assignment?.placedBy === user.email) {
       axios
-        .delete(
-          `https://study-buddies-server.vercel.app/assignments/${assignment._id}`,
-          {
-            withCredentials: true,
-          }
-        )
+        .delete(`http://localhost:5000/assignments/${assignment._id}`, {
+          withCredentials: true,
+        })
         .then((res) => {
           if (res.data.deletedCount > 0) {
             setAssignments(assignments.filter((a) => a._id !== assignment._id));
@@ -115,7 +112,7 @@ const AssignmentsPage = () => {
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto py-4">
       <h1 className="text-4xl text-center font-bold border-b-2 rounded-b-lg shadow-md shadow-emerald-100 pb-6 mb-8">
         Assignments
       </h1>
@@ -151,41 +148,13 @@ const AssignmentsPage = () => {
           <NoData></NoData>
         ) : (
           assignments.map((assignment) => (
-            <div key={assignment._id} className="card bg-base-100 shadow-md">
-              <figure className="h-52">
-                <img src={assignment.thumbnailURL} alt={assignment.title} />
-              </figure>
-              <div className="card-body px-3">
-                <h2 className="card-title">{assignment.title}</h2>
-                <p>
-                  <strong>Marks:</strong> {assignment.marks}
-                </p>
-                <p>
-                  <strong>Difficulty:</strong> {assignment.difficulty}
-                </p>
-                <div className="card-actions justify-between">
-                  <button
-                    className="btn btn-primary text-lg"
-                    onClick={() => handleView(assignment)}
-                  >
-                    <FaEye className="mr-1 text-xl" /> View
-                  </button>
-
-                  <button
-                    onClick={() => handleUpdate(assignment)}
-                    className="btn btn-secondary text-lg"
-                  >
-                    <FaEdit className="mr-1 text-xl" /> Update
-                  </button>
-                  <button
-                    onClick={() => confirmDelete(assignment)}
-                    className="btn btn-error text-lg"
-                  >
-                    <FaTrashAlt className="mr-1 text-xl" /> Delete
-                  </button>
-                </div>
-              </div>
-            </div>
+            <AssignmentCard
+              key={assignment._id}
+              assignment={assignment}
+              confirmDelete={confirmDelete}
+              handleUpdate={handleUpdate}
+              handleView={handleView} 
+            />
           ))
         )}
       </div>

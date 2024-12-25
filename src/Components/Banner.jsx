@@ -1,6 +1,10 @@
+import { useContext } from "react";
 import { Link } from "react-router";
+import AuthContext from "../Context/AuthContext";
 
 const Banner = () => {
+  const { user } = useContext(AuthContext);
+
   return (
     <>
       <div
@@ -17,7 +21,12 @@ const Banner = () => {
             Collaborate, learn, and grow together with friends. <br /> Create
             assignments, complete them, and grade your friend&apos;s work.
           </p>
-          <Link to={'/assignments'} className="btn btn-primary">Get Started</Link>
+          <Link
+            to={user ? "/assignments" : "/register"}
+            className="btn btn-primary"
+          >
+            Get Started
+          </Link>
         </div>
       </div>
     </>

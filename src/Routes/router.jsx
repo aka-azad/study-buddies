@@ -11,6 +11,7 @@ import AssignmentDetails from "../Pages/AssignmentDetails";
 import PendingAssignments from "../Pages/PendingAssignments";
 import MyAttemptedAssignments from "../Pages/MyAttemptedAssignments";
 import ErrorPage from "../Pages/ErrorPage";
+import RedirectHomeRoute from "./RedirectHomeRoute";
 
 const router = createBrowserRouter([
   {
@@ -23,11 +24,19 @@ const router = createBrowserRouter([
       },
       {
         path: "signin",
-        element: <Signin />,
+        element: (
+          <RedirectHomeRoute>
+            <Signin />
+          </RedirectHomeRoute>
+        ),
       },
       {
         path: "register",
-        element: <Signup />,
+        element: (
+          <RedirectHomeRoute>
+            <Signup />
+          </RedirectHomeRoute>
+        ),
       },
       {
         path: "assignments",

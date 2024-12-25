@@ -46,6 +46,7 @@ const Signin = () => {
     setError("");
     signInWithEmailPassword(email, password)
       .then(() => {
+        toast.success("Logged in Successfully");
         setLoading(false);
         navigate(from);
       })
@@ -67,10 +68,12 @@ const Signin = () => {
         };
         setLoading(false);
         axios
-          .post("https://study-buddies-server.vercel.app/users", userInfo)
+          .post("http://localhost:5000/users", userInfo)
           .then((res) => res.data)
           .then((data) => {
             data.insertedId && toast.success("Account Registered Successfully");
+            toast.success("Logged in Successfully");
+
             navigate(from);
           })
           .catch((err) => console.log(err));

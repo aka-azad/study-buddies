@@ -18,7 +18,7 @@ const AssignmentDetails = () => {
 
   useEffect(() => {
     axios
-      .get(`https://study-buddies-server.vercel.app/assignments/${id}`, {
+      .get(`http://localhost:5000/assignments/${id}`, {
         withCredentials: true,
       })
       .then((res) => {
@@ -57,13 +57,9 @@ const AssignmentDetails = () => {
     };
 
     axios
-      .post(
-        "https://study-buddies-server.vercel.app/submissions",
-        submissionData,
-        {
-          withCredentials: true,
-        }
-      )
+      .post("http://localhost:5000/submissions", submissionData, {
+        withCredentials: true,
+      })
       .then((res) => {
         if (res.data.insertedId) {
           toast.success("Assignment submitted successfully.");
@@ -80,20 +76,22 @@ const AssignmentDetails = () => {
   };
 
   return (
-    <div className="container mx-auto lg:w-8/12 md:w-10/12 p-4">
+    <div className=" mx-auto  lg:w-8/12 w-full p-4">
       <Link to="/assignments" className="btn btn-secondary mb-4">
         <FaArrowLeft className="mr-2" /> Back to Assignments
       </Link>
       {loading && <LottieLoader />}
       {assignment && (
-        <div className=" p-6 rounded-lg shadow-md">
+        <div className="w-full p-6 rounded-lg shadow-md">
           <h1 className="text-2xl font-bold mb-4">{assignment.title}</h1>
-          <img
-            src={assignment.thumbnailURL}
-            alt={assignment.title}
-            className="mb-4 h-64 object-cover w-full"
-          />
-          <p className="mb-2">
+          <figure className="w-full aspect-video h-64 rounded-lg overflow-hidden">
+            <img
+              src={assignment.thumbnailURL}
+              alt={assignment.title}
+              className="mb-4 h-full object-cover w-full"
+            />
+          </figure>
+          <p className="my-2">
             <strong>Description:</strong> {assignment.description}
           </p>
           <p className="mb-2">

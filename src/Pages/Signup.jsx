@@ -7,7 +7,7 @@ import axios from "axios";
 import AuthContext from "../Context/AuthContext";
 
 const Signup = () => {
-  const { setLoading, signUpWithEmailPassword } = useContext(AuthContext);
+  const { setLoading, signUpWithEmailPassword, user } = useContext(AuthContext);
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -15,6 +15,10 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+
+  if (user) {
+    navigate("/");
+  }
 
   const validatePassword = (password) => {
     if (!/[A-Z]/.test(password)) {
@@ -44,7 +48,7 @@ const Signup = () => {
       .then(() => {
         updateProfile(auth.currentUser, { displayName: name, photoURL });
         axios
-          .post("https://study-buddies-server.vercel.app/users", {
+          .post("http://localhost:5000/users", {
             displayName: name,
             photoURL,
             email,
