@@ -3,7 +3,7 @@ import { useState } from "react";
 const FAQSection = () => {
   const faqs = [
     {
-      question: "What is StudyBuddies?",
+      question: "What is Study Buddies?",
       answer:
         "StudyBuddies is an online platform that allows friends to collaborate on assignments, complete them, and grade each other's work, enhancing the group study experience.",
     },
@@ -15,7 +15,7 @@ const FAQSection = () => {
     {
       question: "Can I grade my friends' assignments?",
       answer:
-        "Yes! After assignments are completed, you can grade your friends' work and provide valuable feedback to help them improve.",
+        "Yes! After assignments are completed, you can grade your friend's work and provide valuable feedback to help them improve.",
     },
     {
       question: "Is my data secure?",

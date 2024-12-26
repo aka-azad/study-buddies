@@ -100,7 +100,7 @@ const PendingAssignments = () => {
         <div className="overflow-x-auto">
           <table className="table-auto w-full border-collapse">
             <thead>
-              <tr className="bg-base-300">
+              <tr className="bg-base-300 *:min-w-fit">
                 <th className="px-4 py-2">Title</th>
                 <th className="px-4 py-2">Marks</th>
                 <th className="px-4 py-2">Examinee Name</th>
@@ -109,7 +109,7 @@ const PendingAssignments = () => {
             </thead>
             <tbody>
               {assignments.map((assignment) => (
-                <tr key={assignment._id}>
+                <tr key={assignment._id} className="*:min-w-fit">
                   <td className="border px-4 py-2">{assignment.title}</td>
                   <td className="border px-4 py-2">{assignment.marks}</td>
                   <td className="border px-4 py-2">
@@ -134,7 +134,7 @@ const PendingAssignments = () => {
 
       <dialog
         id="give_mark_modal"
-        className="modal modal-bottom sm:modal-middle w-10/12 mx-auto"
+        className="modal sm:modal-middle px-2 mx-auto"
       >
         <div className="modal-box">
           <h2 className="text-xl font-bold mb-4">Give Mark</h2>

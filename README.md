@@ -1,8 +1,37 @@
-# React + Vite
+# Study Buddies
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Purpose**:
+Study Buddies is a web application designed to facilitate online group study with friends. Users can create assignments, complete them, and grade their friends' assignments, fostering a collaborative and interactive learning environment.
 
-Currently, two official plugins are available:
+**Live URL**:
+[Study Buddies](https://study-buddies-by-ashraf.web.app)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Key Features
+
+- **User Authentication**: Register, log in, and manage user profiles using Firebase.
+- **Assignment Creation**: Users can create new assignments with details like title, description, marks, difficulty, and due date.
+- **Assignment Submission**: Users can submit assignments, view their status, and receive feedback from friends.
+- **Grading System**: Users can grade their friends' assignments and provide feedback.
+- **Responsive Design**: Ensures compatibility across various devices and screen sizes.
+- **Interactive UI**: Engaging and user-friendly interface with animations and notifications.
+
+## Dependencies
+
+The project uses the following npm packages:
+
+- **vite**
+- **react**
+- **axios**
+- **dotenv**
+- **firebase**
+- **localforage**
+- **lottie-react**
+- **match-sorter**
+- **react**
+- **react-datepicker**
+- **react-dom**
+- **react-icons**
+- **react-router**
+- **react-toastify**
+- **sort-by**
+- **sweetalert2**

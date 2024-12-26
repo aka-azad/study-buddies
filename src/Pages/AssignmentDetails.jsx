@@ -84,7 +84,7 @@ const AssignmentDetails = () => {
       {assignment && (
         <div className="w-full p-6 rounded-lg shadow-md">
           <h1 className="text-2xl font-bold mb-4">{assignment.title}</h1>
-          <figure className="w-full aspect-video h-64 rounded-lg overflow-hidden">
+          <figure className="w-full aspect-video max-h-64 rounded-lg overflow-hidden">
             <img
               src={assignment.thumbnailURL}
               alt={assignment.title}
@@ -115,10 +115,7 @@ const AssignmentDetails = () => {
         </div>
       )}
 
-      <dialog
-        id="my_modal"
-        className="modal modal-bottom sm:modal-middle w-10/12 mx-auto"
-      >
+      <dialog id="my_modal" className="modal sm:modal-middle px-2 mx-auto">
         <div className="modal-box">
           <h2 className="text-xl font-bold mb-4">Submit Assignment</h2>
           <form onSubmit={handleSubmit}>

@@ -4,7 +4,7 @@ import { FcReadingEbook } from "react-icons/fc";
 
 const Footer = () => {
   return (
-    <footer className="bg-gradient-to-r  from-indigo-500 via-purple-500 to-pink-500 text-white py-8">
+    <footer className="bg-gradient-to-r rounded-t-3xl   from-indigo-500 via-purple-500 to-pink-500 text-white py-8">
       <div className="w-10/12 mx-auto flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0 md:space-x-12 px-4">
         <div className="flex flex-col items-center">
           <Link
