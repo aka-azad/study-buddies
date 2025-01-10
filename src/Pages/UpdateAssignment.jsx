@@ -20,7 +20,9 @@ const UpdateAssignment = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/assignments/${id}`, { withCredentials: true })
+      .get(`https://study-buddies-server.vercel.app/assignments/${id}`, {
+        withCredentials: true,
+      })
       .then((res) => {
         const assignment = res.data;
         setTitle(assignment.title);
@@ -49,9 +51,13 @@ const UpdateAssignment = () => {
     };
 
     axios
-      .put(`http://localhost:5000/assignments/${id}`, updatedAssignment, {
-        withCredentials: true,
-      })
+      .put(
+        `https://study-buddies-server.vercel.app/assignments/${id}`,
+        updatedAssignment,
+        {
+          withCredentials: true,
+        }
+      )
       .then((res) => {
         if (res.data.modifiedCount > 0) {
           toast.success("Assignment updated successfully.");

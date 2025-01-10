@@ -8,7 +8,7 @@ const Banner = () => {
   return (
     <>
       <div
-        className="relative bg-cover bg-center py-36 rounded-3xl overflow-hidden"
+        className="relative bg-cover bg-center py-36 mb-16 rounded-3xl overflow-hidden"
         style={{
           backgroundImage:
             'url("https://www.signupgenius.com/images/new-landing/college/group-study.jpg")',

@@ -4,6 +4,7 @@ import {
   FaChalkboardTeacher,
   FaTasks,
 } from "react-icons/fa";
+import SectionHeading from "./SectionHeading";
 
 const FeaturesSection = () => {
   const features = [
@@ -34,9 +35,10 @@ const FeaturesSection = () => {
   ];
 
   return (
-    <div className="py-16 bg-base-100">
+    <div className="py-16 ">
       <div className="container mx-auto text-center">
-        <h2 className="text-4xl font-bold border-b-2 rounded-b-lg shadow-md shadow-emerald-100 pb-6 mb-8">Supercharge Your Studies with Our Unique Features</h2>
+        <SectionHeading title="Supercharge Your Studies with Our Unique Features" />
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {features.map((feature, index) => (
             <div

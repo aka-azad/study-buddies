@@ -4,6 +4,8 @@ import { toast } from "react-toastify";
 import { FcGoogle } from "react-icons/fc";
 import axios from "axios";
 import AuthContext from "../Context/AuthContext";
+import registerAnimation from "../assets/tablet-login-animate.svg";
+import SectionHeading from "../Components/SectionHeading";
 
 const Signin = () => {
   const { user, signInWithEmailPassword, signInWithGoogle, setLoading } =
@@ -68,7 +70,7 @@ const Signin = () => {
         };
         setLoading(false);
         axios
-          .post("http://localhost:5000/users", userInfo)
+          .post("https://study-buddies-server.vercel.app/users", userInfo)
           .then((res) => res.data)
           .then((data) => {
             data.insertedId && toast.success("Account Registered Successfully");
@@ -83,53 +85,63 @@ const Signin = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold text-center mb-4">Log In</h1>
-      <form onSubmit={handleSubmit} className="max-w-sm mx-auto">
-        <div className="form-control mb-4">
-          <label className="label">
-            <span className="label-text">Email</span>
-          </label>
-          <input
-            type="email"
-            className="input input-bordered"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+      <SectionHeading title="Login" />
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div>
+          <img src={registerAnimation} alt="" />
         </div>
-        <div className="form-control mb-4">
-          <label className="label">
-            <span className="label-text">Password</span>
-          </label>
-          <input
-            type="password"
-            className="input input-bordered"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+        <div className="self-center">
+          {" "}
+          <form onSubmit={handleSubmit} className="max-w-sm mx-auto">
+            <div className="form-control mb-4">
+              <label className="label">
+                <span className="label-text">Email</span>
+              </label>
+              <input
+                type="email"
+                className="input input-bordered"
+                value={email}
+                placeholder="Enter Email"
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+            <div className="form-control mb-4">
+              <label className="label">
+                <span className="label-text">Password</span>
+              </label>
+              <input
+                type="password"
+                className="input input-bordered"
+                value={password}
+                placeholder="Must have an uppercase, a lowercase & a number"
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+            <div className="form-control">
+              <button type="submit" className="btn btn-primary w-full">
+                Log In
+              </button>
+            </div>
+          </form>
+          <div className="divider max-w-sm mx-auto">OR</div>
+          <div className="flex flex-col items-center mt-4">
+            {error && <p className="text-red-500">{error}</p>}
+            <button
+              onClick={handleGoogleLogin}
+              className="btn btn-primary btn-circle"
+            >
+              <FcGoogle className="text-2xl" />
+            </button>
+            <p className="mt-2">
+              {"Don't have an account? "}
+              <Link to="/register" className="text-blue-500">
+                Register
+              </Link>
+            </p>
+          </div>
         </div>
-        <div className="form-control">
-          <button type="submit" className="btn btn-primary w-full">
-            Log In
-          </button>
-        </div>
-      </form>
-      <div className="divider max-w-sm mx-auto">OR</div>
-      <div className="flex flex-col items-center mt-4">
-        {error && <p className="text-red-500">{error}</p>}
-        <button
-          onClick={handleGoogleLogin}
-          className="btn btn-primary btn-circle"
-        >
-          <FcGoogle className="text-2xl" />
-        </button>
-        <p className="mt-2">
-          {"Don't have an account? "}
-          <Link to="/register" className="text-blue-500">
-            Register
-          </Link>
-        </p>
       </div>
     </div>
   );

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import SectionHeading from "./SectionHeading";
 
 const FAQSection = () => {
   const faqs = [
@@ -13,7 +14,7 @@ const FAQSection = () => {
         "Once logged in, navigate to the 'Create Assignments' section. Fill in the required details such as title, description, marks, difficulty level, and due date, then submit the form to create an assignment.",
     },
     {
-      question: "Can I grade my friends' assignments?",
+      question: "Can I grade my friend's assignments?",
       answer:
         "Yes! After assignments are completed, you can grade your friend's work and provide valuable feedback to help them improve.",
     },
@@ -46,11 +47,9 @@ const FAQSection = () => {
   };
 
   return (
-    <div className="py-16 ">
+    <div className="pb-16">
       <div className="container mx-auto">
-        <h2 className="text-4xl text-center font-bold border-b-2 rounded-b-lg shadow-md shadow-emerald-100 pb-6 mb-8">
-          Unlocking the Mysteries: Your Questions Answered
-        </h2>
+        <SectionHeading   title="Unlocking the Mysteries: Your Questions Answered"/>
         <div className="space-y-4">
           {faqs.map((faq, index) => (
             <div key={index} className="p-4 border rounded-lg shadow-md ">

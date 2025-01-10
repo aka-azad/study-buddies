@@ -5,6 +5,8 @@ import { toast } from "react-toastify";
 import auth from "../firebase/firebase.config";
 import axios from "axios";
 import AuthContext from "../Context/AuthContext";
+import signupAnimation from "../assets/sign-up-animate.svg";
+import SectionHeading from "../Components/SectionHeading";
 
 const Signup = () => {
   const { setLoading, signUpWithEmailPassword, user } = useContext(AuthContext);
@@ -48,7 +50,7 @@ const Signup = () => {
       .then(() => {
         updateProfile(auth.currentUser, { displayName: name, photoURL });
         axios
-          .post("http://localhost:5000/users", {
+          .post("https://study-buddies-server.vercel.app/users", {
             displayName: name,
             photoURL,
             email,
@@ -68,69 +70,76 @@ const Signup = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold text-center mb-4">Register</h1>
-      <form onSubmit={handleSubmit} className="max-w-sm mx-auto">
-        <div className="form-control mb-4">
-          <label className="label">
-            <span className="label-text">Name</span>
-          </label>
-          <input
-            type="text"
-            className="input input-bordered"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
+      <SectionHeading title="Register" />
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div>
+          <img src={signupAnimation} alt="" />
         </div>
-        <div className="form-control mb-4">
-          <label className="label">
-            <span className="label-text">Email</span>
-          </label>
-          <input
-            type="email"
-            className="input input-bordered"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+        <div>
+          <form onSubmit={handleSubmit} className="max-w-sm mx-auto">
+            <div className="form-control mb-4">
+              <label className="label">
+                <span className="label-text">Name</span>
+              </label>
+              <input
+                type="text"
+                className="input input-bordered"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+            </div>
+            <div className="form-control mb-4">
+              <label className="label">
+                <span className="label-text">Email</span>
+              </label>
+              <input
+                type="email"
+                className="input input-bordered"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+            <div className="form-control mb-4">
+              <label className="label">
+                <span className="label-text">Photo URL</span>
+              </label>
+              <input
+                type="text"
+                className="input input-bordered"
+                value={photoURL}
+                onChange={(e) => setPhotoURL(e.target.value)}
+              />
+            </div>
+            <div className="form-control mb-4">
+              <label className="label">
+                <span className="label-text">Password</span>
+              </label>
+              <input
+                type="password"
+                className="input input-bordered"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+            {error && <p className="text-red-500">{error}</p>}
+            <div className="form-control">
+              <button type="submit" className="btn btn-primary w-full">
+                Register
+              </button>
+            </div>
+          </form>
+          <div className="flex flex-col items-center mt-4">
+            <p>
+              Already have an account?{" "}
+              <Link to="/signin" className="text-blue-500">
+                Sign In
+              </Link>
+            </p>
+          </div>
         </div>
-        <div className="form-control mb-4">
-          <label className="label">
-            <span className="label-text">Photo URL</span>
-          </label>
-          <input
-            type="text"
-            className="input input-bordered"
-            value={photoURL}
-            onChange={(e) => setPhotoURL(e.target.value)}
-          />
-        </div>
-        <div className="form-control mb-4">
-          <label className="label">
-            <span className="label-text">Password</span>
-          </label>
-          <input
-            type="password"
-            className="input input-bordered"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        {error && <p className="text-red-500">{error}</p>}
-        <div className="form-control">
-          <button type="submit" className="btn btn-primary w-full">
-            Register
-          </button>
-        </div>
-      </form>
-      <div className="flex flex-col items-center mt-4">
-        <p>
-          Already have an account?{" "}
-          <Link to="/signin" className="text-blue-500">
-            Sign In
-          </Link>
-        </p>
       </div>
     </div>
   );

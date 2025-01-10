@@ -1,41 +1,40 @@
-import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
-import AuthContext from "../Context/AuthContext";
-import NoData from "../Components/NoData";
 import LottieLoader from "../Components/LottieLoader";
 import AssignmentCard from "../Components/AssignmentCard";
+import SectionHeading from "./SectionHeading";
+import NoData from "./NoData";
+import { Link } from "react-router";
+import { FaArrowRight } from "react-icons/fa";
+import AuthContext from "../Context/AuthContext";
 
-const AssignmentsPage = () => {
+const FeaturedAssignments = () => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [assignments, setAssignments] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [difficultyFilter, setDifficultyFilter] = useState("all");
+  const [featuredAssignments, setFeaturedAssignments] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchAssignments = () => {
+    const fetchFeaturedAssignments = () => {
       axios
-        .get("https://study-buddies-server.vercel.app/assignments", {
-          params: {
-            search: searchQuery,
-            difficulty:
-              difficultyFilter !== "all" ? difficultyFilter : undefined,
-          },
-        })
+        .get("https://study-buddies-server.vercel.app/assignments")
         .then((response) => {
           setLoading(false);
-          setAssignments(response.data);
+          const assignments = response.data;
+          const randomAssignments = assignments
+            .sort(() => 0.5 - Math.random())
+            .slice(0, 8);
+          setFeaturedAssignments(randomAssignments);
         })
         .catch((error) => {
-          console.error("Error fetching assignments:", error);
+          console.error("Error fetching featured assignments:", error);
         });
     };
 
-    fetchAssignments();
-  }, [searchQuery, difficultyFilter]);
+    fetchFeaturedAssignments();
+  }, []);
 
   const handleUpdate = (assignment) => {
     if (assignment.placedBy === user?.email) {
@@ -43,7 +42,7 @@ const AssignmentsPage = () => {
     } else {
       Swal.fire(
         "Error!",
-        "You can only Edit assignments you created.",
+        "You can only edit assignments you created.",
         "error"
       );
     }
@@ -52,10 +51,11 @@ const AssignmentsPage = () => {
   const handleView = (assignment) => {
     if (user) {
       navigate(`/assignments/${assignment._id}`);
-    } else
+    } else {
       navigate("/signin", {
         state: `/assignments/${assignment._id}`,
       });
+    }
   };
 
   const handleDelete = (assignment) => {
@@ -69,7 +69,9 @@ const AssignmentsPage = () => {
         )
         .then((res) => {
           if (res.data.deletedCount > 0) {
-            setAssignments(assignments.filter((a) => a._id !== assignment._id));
+            setFeaturedAssignments(
+              featuredAssignments.filter((a) => a._id !== assignment._id)
+            );
             Swal.fire(
               "Deleted!",
               "Assignment deleted successfully.",
@@ -116,41 +118,13 @@ const AssignmentsPage = () => {
 
   return (
     <div className="container mx-auto py-4">
-      <h1 className="text-4xl text-center font-bold border-b-2 rounded-b-lg shadow-md shadow-emerald-100 pb-6 mb-8">
-        Assignments
-      </h1>
-      <div className="mb-4 flex justify-between items-center">
-        <input
-          type="text"
-          placeholder="Search by title..."
-          className="input input-bordered w-full max-w-xs"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-        <select
-          className="select select-bordered w-full max-w-xs"
-          value={difficultyFilter}
-          onChange={(e) => setDifficultyFilter(e.target.value)}
-        >
-          <option value="all">All Difficulties</option>
-          <option value="easy">Easy</option>
-          <option value="medium">Medium</option>
-          <option value="hard">Hard</option>
-        </select>
-      </div>
-
-      <div
-        className={`${
-          assignments.length > 0
-            ? "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 nothing"
-            : ""
-        }}`}
-      >
+      <SectionHeading title="Some Of Ongoing Assignments" />
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {loading && <LottieLoader />}
-        {assignments.length < 1 && !loading ? (
-          <NoData></NoData>
+        {featuredAssignments.length < 1 && !loading ? (
+          <NoData />
         ) : (
-          assignments.map((assignment) => (
+          featuredAssignments.map((assignment) => (
             <AssignmentCard
               key={assignment._id}
               assignment={assignment}
@@ -161,8 +135,16 @@ const AssignmentsPage = () => {
           ))
         )}
       </div>
+      <div className="mt-8 mx-auto w-fit">
+        <Link
+          to={"/assignments"}
+          className="btn btn-primary text-base bg-opacity-80"
+        >
+          See more <FaArrowRight />
+        </Link>
+      </div>
     </div>
   );
 };
 
-export default AssignmentsPage;
+export default FeaturedAssignments;

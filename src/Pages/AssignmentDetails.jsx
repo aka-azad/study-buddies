@@ -18,7 +18,7 @@ const AssignmentDetails = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/assignments/${id}`, {
+      .get(`https://study-buddies-server.vercel.app/assignments/${id}`, {
         withCredentials: true,
       })
       .then((res) => {
@@ -57,9 +57,13 @@ const AssignmentDetails = () => {
     };
 
     axios
-      .post("http://localhost:5000/submissions", submissionData, {
-        withCredentials: true,
-      })
+      .post(
+        "https://study-buddies-server.vercel.app/submissions",
+        submissionData,
+        {
+          withCredentials: true,
+        }
+      )
       .then((res) => {
         if (res.data.insertedId) {
           toast.success("Assignment submitted successfully.");

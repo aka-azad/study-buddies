@@ -41,12 +41,12 @@ const AuthProvider = ({ children }) => {
       setUser(acc);
       const user = { email: acc?.email };
       if (acc) {
-        axios.post("http://localhost:5000/login", user, {
+        axios.post("https://study-buddies-server.vercel.app/login", user, {
           withCredentials: true,
         });
       } else {
         axios.post(
-          "http://localhost:5000/logout",
+          "https://study-buddies-server.vercel.app/logout",
           {},
           {
             withCredentials: true,

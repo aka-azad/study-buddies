@@ -10,36 +10,36 @@ const AssignmentCard = (props) => {
         <figure className="h-52 w-full">
           <img className="h-full w-full object-cover" src={assignment.thumbnailURL} alt={assignment.title} />
         </figure>
-        <div className="py-5 px-4">
-          <h2 className="card-title">{assignment.title}</h2>
+        <div className="p-4">
+          <h2 className="card-title ">{assignment.title}</h2>
           <p>
             <strong>Marks:</strong> {assignment.marks}
           </p>
           <p className="mb-3">
             <strong>Difficulty:</strong> {assignment.difficulty}
           </p>
-          <div className="grid grid-cols-2 gap-3">
-            <div className="grid grid-cols-2 gap-3 col-span-2">
+          <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-2 col-span-2">
               <button
-                className="btn  btn-primary text-lg"
+                className="btn btn-sm btn-primary text-base"
                 onClick={() => handleView(assignment)}
               >
-                <FaEye className="mr-1 text-xl" /> View
+                <FaEye className="mr-1 text-base" /> View
               </button>
 
               <button
                 onClick={() => handleUpdate(assignment)}
-                className="btn px-3  btn-secondary text-lg"
+                className="btn px-3 btn-sm btn-secondary text-base"
               >
-                <FaEdit className="mr-1 text-base" /> Update
+                <FaEdit className="mr-1 text-sm" /> Update
               </button>
             </div>
             <div className="col-span-2">
               <button
                 onClick={() => confirmDelete(assignment)}
-                className="btn w-full btn-error text-lg"
+                className="btn w-full btn-sm btn-error text-base"
               >
-                <FaTrashAlt className="mr-1 text-xl" /> Delete
+                <FaTrashAlt className="mr-1 text-sm" /> Delete
               </button>
             </div>
           </div>
